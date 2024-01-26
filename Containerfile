@@ -19,5 +19,7 @@ COPY Makefile /build/
 
 RUN git config --global user.email "blah@blah.com"
 ENV CROSS_COMPILE=aarch64-linux-gnu-
+# https://docs.u-boot.org/en/latest/build/reproducible.html
+ARG SOURCE_DATE_EPOCH=1704728268
 WORKDIR /build
 RUN make target_odroid-m1
