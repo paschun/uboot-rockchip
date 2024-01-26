@@ -3,8 +3,8 @@
 
 UBOOT_TAG  := v2024.01
 
-RK3568_ATF := ../rkbin/rk3568_bl31_v1.28.elf
-RK3568_TPL := ../rkbin/rk3568_ddr_1560MHz_v1.15.bin
+RK3568_ATF := ../rkbin/rk3568_bl31_v1.43.elf
+RK3568_TPL := ../rkbin/rk3568_ddr_1560MHz_v1.18.bin
 
 RK3588_ATF := ../rkbin/rk3588_bl31_v1.34.elf
 RK3588_TPL := ../rkbin/rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.08.bin
@@ -13,7 +13,6 @@ UBOOT_BRANCH := $(UBOOT_TAG:v%=%)
 
 TARGETS := target_rock-5b target_nanopc-t6 target_nanopi-r6c target_orangepi-5 target_orangepi-5-plus \
            target_nanopi-r5c target_nanopi-r5s target_odroid-m1 target_radxa-e25
-
 
 all: $(TARGETS)
 
@@ -35,8 +34,8 @@ build: configure
 	@$(MAKE) --no-print-directory help_block
 
 u-boot: | check_prereqs
-	git clone "https://github.com/u-boot/u-boot.git"
-	git -C u-boot fetch --tags
+	git clone --shallow-since=2024-01-07 "https://github.com/u-boot/u-boot.git"
+	git -C u-boot fetch origin $(UBOOT_TAG)
 
 target_rock-5b:
 	$(MAKE) CFG=rock5b-rk3588_defconfig BL31=$(RK3588_ATF) ROCKCHIP_TPL=$(RK3588_TPL) BRD=$(@:target_%=%) build
