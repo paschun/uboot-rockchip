@@ -1,22 +1,21 @@
-From 8476308816faf3f40322c3c5ceed911c83791a0a Mon Sep 17 00:00:00 2001
+From ab38c8508d68f1470888b2ed2d8c0ddd40b10855 Mon Sep 17 00:00:00 2001
 From: John Clark <inindev@gmail.com>
-Date: Sun, 24 Dec 2023 02:58:45 +0000
-Subject: [PATCH 11/19] arm64: dts: rockchip: add usb 3.0a support for the
- nanopc-t6
+Date: Wed, 29 May 2024 16:30:56 -0400
+Subject: [PATCH 1/5] arm64: dts: rockchip: add usb3 port to the nanopc-t6
 
-Signed-off-by: John Clark <inindev@gmail.com>
 ---
- arch/arm/dts/rk3588-nanopc-t6.dts | 41 +++++++++++++++++++++++++++++--
- 1 file changed, 39 insertions(+), 2 deletions(-)
+ .../src/arm64/rockchip/rk3588-nanopc-t6.dts   | 38 ++++++++++++++++++-
+ 1 file changed, 36 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/dts/rk3588-nanopc-t6.dts b/arch/arm/dts/rk3588-nanopc-t6.dts
-index 7f2395c8e4..75b61f5325 100644
---- a/arch/arm/dts/rk3588-nanopc-t6.dts
-+++ b/arch/arm/dts/rk3588-nanopc-t6.dts
+diff --git a/dts/upstream/src/arm64/rockchip/rk3588-nanopc-t6.dts b/dts/upstream/src/arm64/rockchip/rk3588-nanopc-t6.dts
+index 997b516c25..a1ec953103 100644
+--- a/dts/upstream/src/arm64/rockchip/rk3588-nanopc-t6.dts
++++ b/dts/upstream/src/arm64/rockchip/rk3588-nanopc-t6.dts
 @@ -159,6 +159,18 @@
- 		vin-supply = <&vcc_3v3_s3>;
+ 		regulator-max-microvolt = <3300000>;
+ 		vin-supply = <&vcc5v0_sys>;
  	};
- 
++
 +	vcc5v0_host_30: vcc5v0-host-30 {
 +		compatible = "regulator-fixed";
 +		enable-active-high;
@@ -28,11 +27,10 @@ index 7f2395c8e4..75b61f5325 100644
 +		regulator-name = "vcc5v0_host_30";
 +		vin-supply = <&vcc5v0_sys>;
 +	};
-+
- 	vbus5v0_typec: vbus5v0-typec-regulator {
- 		compatible = "regulator-fixed";
- 		enable-active-high;
-@@ -522,6 +534,10 @@
+ };
+ 
+ &combphy0_ps {
+@@ -511,6 +523,10 @@
  		usbc0_int: usbc0-int {
  			rockchip,pins = <0 RK_PD3 RK_FUNC_GPIO &pcfg_pull_up>;
  		};
@@ -43,7 +41,7 @@ index 7f2395c8e4..75b61f5325 100644
  	};
  };
  
-@@ -895,11 +911,12 @@
+@@ -883,11 +899,12 @@
  	status = "okay";
  };
  
@@ -58,7 +56,7 @@ index 7f2395c8e4..75b61f5325 100644
  	status = "okay";
  };
  
-@@ -907,10 +924,26 @@
+@@ -895,10 +912,22 @@
  	status = "okay";
  };
  
@@ -78,21 +76,18 @@ index 7f2395c8e4..75b61f5325 100644
 +	status = "okay";
 +};
 +
-+&usbdp_phy1_u3 {
-+	status = "okay";
-+};
-+
  &usb_host0_ehci {
  	status = "okay";
  };
-@@ -926,3 +959,7 @@
+@@ -914,3 +943,8 @@
  &usb_host1_ohci {
  	status = "okay";
  };
 +
 +&usb_host1_xhci {
++	dr_mode = "host";
 +	status = "okay";
 +};
 -- 
-2.43.0
+2.39.2
 
