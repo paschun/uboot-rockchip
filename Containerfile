@@ -1,4 +1,6 @@
 FROM debian:sid
+# https://hub.docker.com/r/trini/u-boot-gitlab-ci-runner/tags
+# ci runner doesnt cross compile, it uses qemu instead
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update && apt upgrade -y
 RUN apt update && apt install -y gcc gcc-aarch64-linux-gnu
@@ -12,6 +14,8 @@ RUN apt install -y bc bison build-essential coccinelle \
   python3-sphinx-rtd-theme python3-subunit python3-testtools \
   python3-virtualenv swig uuid-dev
 RUN apt install -y screen bc bison flex libssl-dev make python3-dev python3-pyelftools python3-setuptools swig git
+# my terminal tools
+RUN apt install -y neovim fd-find ripgrep bat lf
 
 COPY patches/ /build/patches/
 COPY rkbin/ /build/rkbin/
@@ -20,6 +24,6 @@ COPY Makefile /build/
 RUN git config --global user.email "blah@blah.com"
 ENV CROSS_COMPILE=aarch64-linux-gnu-
 # https://docs.u-boot.org/en/latest/build/reproducible.html
-ARG SOURCE_DATE_EPOCH=1704728268
+#ARG SOURCE_DATE_EPOCH=1704728268
 WORKDIR /build
 RUN make target_odroid-m1

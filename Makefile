@@ -24,6 +24,7 @@ configure: u-boot patch
 build: configure
 	@echo "\n$(h1)beginning compile...$(rst)"
 	$(MAKE) -C u-boot -j$$(nproc)
+	$(MAKE) -C u-boot -j$$(nproc) envtools
 
 	@echo "\n$(h1)success, $(BRD) build complete:$(rst)"
 	@echo "$(bld)$(red)"
